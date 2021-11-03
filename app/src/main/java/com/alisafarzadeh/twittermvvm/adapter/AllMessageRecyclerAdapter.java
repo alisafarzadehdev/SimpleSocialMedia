@@ -46,8 +46,7 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
         return new MyViewHolder(binding);
     }
 
-    boolean Bookmarked = false;
-    public boolean isBookmark(String post , ImageView img)
+    public void isBookmark(String post , ImageView img)
     {
         Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
         Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
@@ -59,17 +58,14 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
             @Override
             public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
 
-                Log.d("dddx", "onResponse: "+response.body().get(0).getStatus());
                 if (response.body().get(0).getStatus().equals("0"))
                 {
-                    Bookmarked = false;
                     Log.d("qqqqw", "onResponse: ");
                     img.setImageResource(R.drawable.ic_bookmark_border);
 
                 }else{
                     Log.d("qqqqe", "onResponse: ");
                     img.setImageResource(R.drawable.ic_bookmark);
-                    Bookmarked = true;
                 }
             }
 
@@ -78,7 +74,6 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
                 Log.d("dddx", "onFail: "+t.getMessage());
             }
         });
-        return Bookmarked;
     }
 
     SharedPreferences sharedpreferences;
@@ -90,6 +85,80 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
         holder.binding.setAllMessage(posts.get(position));
 
         isBookmark(posts.get(position).getIdpost(), holder.binding.bookmarkitempost);
+
+        holder.binding.bookmarkitempost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("xx", "onClick: "+posts.get(pos).getIdpost());
+                sharedpreferences = context.getSharedPreferences(context.getPackageName()+"MySaveUser", Context.MODE_PRIVATE);
+
+                int iduser  = sharedpreferences.getInt("ID",-1);
+                String idpost = posts.get(pos).getIdpost();
+
+                MyApi myApi = MyRetrofit.getMyRetrofit().create(MyApi.class);
+                myApi.IsBookmark(iduser+"",idpost).enqueue(new Callback<List<Status>>() {
+                    @Override
+                    public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
+                        Log.d("clickcheck", "onResponse: "+response.body().get(0).getStatus());
+                        if (response.body().get(0).getStatus().equals("0")){
+                            holder.binding.bookmarkitempost.setImageResource(R.drawable.ic_bookmark);
+                            addtoBookmark(iduser+"",idpost);
+                        }else
+                        {
+                            holder.binding.bookmarkitempost.setImageResource(R.drawable.ic_bookmark_border);
+                            removetoBookmark(iduser+"",idpost);
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<List<Status>> call, Throwable t) {
+                        Toast.makeText(context, t.getMessage()+"", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+                /*
+                }
+
+
+                myApi.BookmarkSave(id+"",posts.get(position).getIdpost())
+                        .enqueue(new Callback<List<Status>>() {
+                            @Override
+                            public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
+                                Log.d("xBookmark", "onResponse: "+response.body().get(pos).getStatus());
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<Status>> call, Throwable t) {
+                                Log.d("xBookmark", "onResponse: "+t.getMessage());
+                            }
+                        });
+
+                holder.binding.bookmarkitempost.setImageResource(R.drawable.ic_bookmark);
+
+                sharedpreferences = context.getSharedPreferences(context.getPackageName()+"MySaveUser", Context.MODE_PRIVATE);
+                int id  = sharedpreferences.getInt("ID",-1);
+                Toast.makeText(context, id+"", Toast.LENGTH_SHORT).show();
+
+                MyApi myApi = MyRetrofit.getMyRetrofit().create(MyApi.class);
+                myApi.BookmarkSave(id+"",posts.get(pos).getIdpost())
+                        .enqueue(new Callback<List<Status>>() {
+                            @Override
+                            public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
+                                Log.d("xrecbook", "onResponse: "+response.body().get(0).getStatus());
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<Status>> call, Throwable t) {
+                                Log.d("xrecbook", "onResponse: "+t.getMessage());
+                            }
+                        });
+                 */
+
+
+            }
+        });
+
+
         /*
         if ()
         {
@@ -106,6 +175,36 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
     }
 
 
+    public void addtoBookmark(String user , String post)
+    {
+        MyApi myApi = MyRetrofit.getMyRetrofit().create(MyApi.class);
+        myApi.BookmarkSave(user,post).enqueue(new Callback<List<Status>>() {
+            @Override
+            public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
+                Toast.makeText(context, "saved", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<List<Status>> call, Throwable t) {
+
+            }
+        });
+    }
+    public void removetoBookmark(String user , String post)
+    {
+        MyApi myApi = MyRetrofit.getMyRetrofit().create(MyApi.class);
+        myApi.BookmarkRemove(user,post).enqueue(new Callback<List<Status>>() {
+            @Override
+            public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
+                Toast.makeText(context, "remove", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<List<Status>> call, Throwable t) {
+
+            }
+        });
+    }
 
     @Override
     public int getItemCount() {
