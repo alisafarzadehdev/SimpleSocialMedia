@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main_view"
+    app:startDestination="@id/MMainMessageFragment">
+
+    <fragment
+        android:id="@+id/MAboutFragment"
+        android:name="com.alisafarzadeh.twittermvvm.Fragment.MAboutFragment"
+        android:label="fragment_m_about"
+        tools:layout="@layout/fragment_m_about" />
+    <fragment
+        android:id="@+id/MMessageSavedFragment"
+        android:name="com.alisafarzadeh.twittermvvm.Fragment.MMessageSavedFragment"
+        android:label="fragment_m_message_saved"
+        tools:layout="@layout/fragment_m_message_saved" />
+    <fragment
+        android:id="@+id/MMainMessageFragment"
+        android:name="com.alisafarzadeh.twittermvvm.Fragment.MMainMessageFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/MMyPostFragment"
+        android:name="com.alisafarzadeh.twittermvvm.Fragment.MMyPostFragment"
+        android:label="fragment_m_my_post"
+        tools:layout="@layout/fragment_m_my_post" />
+</navigation>
