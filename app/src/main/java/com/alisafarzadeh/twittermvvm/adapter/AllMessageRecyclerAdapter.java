@@ -32,7 +32,7 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
     List<Post> posts = new ArrayList<>();
     Context context;
     OnMyClickListener onMyClickListener;
-
+    
 
     public AllMessageRecyclerAdapter(List<Post> posts, Context context,OnMyClickListener on) {
         this.posts = posts;
@@ -49,6 +49,8 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
     boolean Bookmarked = false;
     public boolean isBookmark(String post , ImageView img)
     {
+        Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
         sharedpreferences = context.getSharedPreferences(context.getPackageName()+"MySaveUser", Context.MODE_PRIVATE);
         int id  = sharedpreferences.getInt("ID",-1);
         MyApi myApi = MyRetrofit.getMyRetrofit().create(MyApi.class);
