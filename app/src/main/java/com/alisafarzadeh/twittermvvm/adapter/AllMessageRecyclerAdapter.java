@@ -59,6 +59,7 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
     }
     public void isBookmark(String post , ImageView img)
     {
+        Log.d("cccz", "isBookmark: "+post+":"+id);
         sharedpreferences = context.getSharedPreferences(context.getPackageName()+"MySaveUser", Context.MODE_PRIVATE);
         int id  = sharedpreferences.getInt("ID",-1);
         BookmarkApi bookmarkApi = MyRetrofit.getMyRetrofit().create(BookmarkApi.class);
