@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alisafarzadeh.twittermvvm.Retrofit.BookmarkApi;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyApi;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyRetrofit;
 import com.alisafarzadeh.twittermvvm.activity.SendMessageActivity;
@@ -89,7 +90,7 @@ public class MMainMessageFragment extends Fragment {
                     @Override
                     public void onGetIDButtonClicked(int post) {
                         Log.d("fTAG", post+"    :   "+id);
-                        MyApi myApi = MyRetrofit.getMyRetrofit().create(MyApi.class);
+                        BookmarkApi myApi = MyRetrofit.getMyRetrofit().create(BookmarkApi.class);
                         myApi.BookmarkSave(id+"",post+"").enqueue(new Callback<List<Status>>() {
                             @Override
                             public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {

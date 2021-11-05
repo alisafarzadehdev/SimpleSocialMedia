@@ -25,21 +25,6 @@ public interface MyApi {
 
     */
 
-    @FormUrlEncoded
-    @POST("IsBookmark.php")
-    Call<List<Status>> IsBookmark(@Field("userid") String IDuser,
-                            @Field("postid") String IDpost);
-
-    @FormUrlEncoded
-    @POST("BookmarkRemove.php")
-    Call<List<Status>> BookmarkRemove( @Field("Id_user") String user,
-                                     @Field("Id_post") String post);
-
-
-    @FormUrlEncoded
-    @POST("BookmarkPost.php")
-    Call<List<Status>> BookmarkSave( @Field("Id_user") String user,
-                               @Field("Id_post") String post);
 
     @GET("ShowCategory.php")
     Call<List<Category>> ShowCategory();

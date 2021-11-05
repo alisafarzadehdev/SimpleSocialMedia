@@ -11,14 +11,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alisafarzadeh.twittermvvm.Retrofit.BookmarkApi;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyApi;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyRetrofit;
 import com.alisafarzadeh.twittermvvm.model.Post;
 import com.alisafarzadeh.twittermvvm.R;
 import com.alisafarzadeh.twittermvvm.databinding.LayoutRecyclerallmessageBinding;
 import com.alisafarzadeh.twittermvvm.model.Status;
+import com.alisafarzadeh.twittermvvm.viewmodel.BookmarkViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,13 +49,21 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
         return new MyViewHolder(binding);
     }
 
+    BookmarkViewModel bookmarkViewModel= new BookmarkViewModel();
+    public void isBookmarkObserver(String post , ImageView img,Context context)
+    {
+        sharedpreferences = context.getSharedPreferences(context.getPackageName()+"MySaveUser", Context.MODE_PRIVATE);
+        int id  = sharedpreferences.getInt("ID",-1);
+        bookmarkViewModel=new ViewModelProvider().get(BookmarkViewModel.class);
+        bookmarkViewModel.getIsBookmarلهفkViewModel(id+"",post).observe();
+    }
     public void isBookmark(String post , ImageView img)
     {
         sharedpreferences = context.getSharedPreferences(context.getPackageName()+"MySaveUser", Context.MODE_PRIVATE);
         int id  = sharedpreferences.getInt("ID",-1);
-        MyApi myApi = MyRetrofit.getMyRetrofit().create(MyApi.class);
+        BookmarkApi bookmarkApi = MyRetrofit.getMyRetrofit().create(BookmarkApi.class);
         Log.d("cccz", "isBookmark: "+post+":"+id);
-        myApi.IsBookmark(id+"",post+"").enqueue(new Callback<List<Status>>() {
+        bookmarkApi.IsBookmark(id+"",post+"").enqueue(new Callback<List<Status>>() {
             @Override
             public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
 
@@ -93,7 +104,7 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
                 int iduser  = sharedpreferences.getInt("ID",-1);
                 String idpost = posts.get(pos).getIdpost();
 
-                MyApi myApi = MyRetrofit.getMyRetrofit().create(MyApi.class);
+                BookmarkApi myApi = MyRetrofit.getMyRetrofit().create(BookmarkApi.class);
                 myApi.IsBookmark(iduser+"",idpost).enqueue(new Callback<List<Status>>() {
                     @Override
                     public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
@@ -175,7 +186,7 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
 
     public void addtoBookmark(String user , String post)
     {
-        MyApi myApi = MyRetrofit.getMyRetrofit().create(MyApi.class);
+        BookmarkApi myApi = MyRetrofit.getMyRetrofit().create(BookmarkApi.class);
         myApi.BookmarkSave(user,post).enqueue(new Callback<List<Status>>() {
             @Override
             public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
@@ -190,7 +201,7 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
     }
     public void removetoBookmark(String user , String post)
     {
-        MyApi myApi = MyRetrofit.getMyRetrofit().create(MyApi.class);
+        BookmarkApi myApi = MyRetrofit.getMyRetrofit().create(BookmarkApi.class);
         myApi.BookmarkRemove(user,post).enqueue(new Callback<List<Status>>() {
             @Override
             public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
