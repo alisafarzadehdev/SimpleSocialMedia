@@ -121,7 +121,6 @@ public class SendMessageActivity extends AppCompatActivity {
 
         MyApi myApi = MyRetrofit.getMyRetrofit().create(MyApi.class);
         binding.HeaderSendPost.buildDrawingCache();
-
         myApi.SendPost(
                 Utils.imagetoString(bitmap),
                 binding.TitleSendPost.getText().toString(),
