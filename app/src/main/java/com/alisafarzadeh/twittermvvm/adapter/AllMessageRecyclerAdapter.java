@@ -11,17 +11,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alisafarzadeh.twittermvvm.Retrofit.BookmarkApi;
-import com.alisafarzadeh.twittermvvm.Retrofit.MyApi;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyRetrofit;
 import com.alisafarzadeh.twittermvvm.model.Post;
 import com.alisafarzadeh.twittermvvm.R;
 import com.alisafarzadeh.twittermvvm.databinding.LayoutRecyclerallmessageBinding;
 import com.alisafarzadeh.twittermvvm.model.Status;
-import com.alisafarzadeh.twittermvvm.viewmodel.BookmarkViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,14 +46,8 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
         return new MyViewHolder(binding);
     }
 
-    BookmarkViewModel bookmarkViewModel= new BookmarkViewModel();
-    public void isBookmarkObserver(String post , ImageView img,Context context)
-    {
-        sharedpreferences = context.getSharedPreferences(context.getPackageName()+"MySaveUser", Context.MODE_PRIVATE);
-        int id  = sharedpreferences.getInt("ID",-1);
-        bookmarkViewModel=new ViewModelProvider().get(BookmarkViewModel.class);
-        bookmarkViewModel.getIsBookmarلهفkViewModel(id+"",post).observe();
-    }
+
+
     public void isBookmark(String post , ImageView img)
     {
         sharedpreferences = context.getSharedPreferences(context.getPackageName()+"MySaveUser", Context.MODE_PRIVATE);
@@ -182,6 +173,7 @@ git
 
 
     }
+
 
 
     public void addtoBookmark(String user , String post)

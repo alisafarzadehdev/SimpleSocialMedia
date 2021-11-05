@@ -12,6 +12,10 @@ import com.alisafarzadeh.twittermvvm.model.Status;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,54 +61,33 @@ public class GetMessageResponse {
         return mutableLiveData;
     }
 
-
-
-    public MutableLiveData<List<Status>> IsBookmark( String IDuser, String IDpost)
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+    public MutableLiveData<List<Post>> getAllPostObserve()
     {
-        MutableLiveData<List<Status>> mutableLiveData = new MutableLiveData<>();
-        bookmarkApi.IsBookmark(IDuser,IDpost).enqueue(new Callback<List<Status>>() {
+        MutableLiveData<List<Post>> mutable = new MutableLiveData<>();
+        compositeDisposable.add(MessageApi.ShowPostObserve()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(Schedulers.newThread())
+        .subscribe(new Consumer<List<Post>>() {
             @Override
-            public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
-                mutableLiveData.setValue(response.body());
+            public void accept(List<Post> posts) throws Throwable {
+                mutable.setValue(posts);
             }
-            @Override
-            public void onFailure(Call<List<Status>> call, Throwable t) {
-
-            }
-        });
-        return mutableLiveData;
+        }));
+        return mutable;
     }
-    public MutableLiveData<List<Status>> BookmarkRemove( String IDuser, String IDpost)
-    {
-        MutableLiveData<List<Status>> mutableLiveData = new MutableLiveData<>();
-        bookmarkApi.BookmarkRemove(IDuser,IDpost).enqueue(new Callback<List<Status>>() {
-            @Override
-            public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
-                mutableLiveData.setValue(response.body());
-            }
+    /*
+    MutableLiveData<List<Status>> mutableLiveData = new MutableLiveData<>();
+        compositeDisposable.add(bookmarkApi.BookmarkSaveObserve(IDuser,IDpost)
+            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(Schedulers.newThread())
+            .subscribe(new Consumer<List<Status>>() {
+        @Override
+        public void accept(List<Status> statuses) throws Throwable {
+            mutableLiveData.setValue(statuses);
+        }
+    }));
+    */
 
-            @Override
-            public void onFailure(Call<List<Status>> call, Throwable t) {
-
-            }
-        });
-        return mutableLiveData;
-    }
-    public MutableLiveData<List<Status>> BookmarkSave( String IDuser, String IDpost)
-    {
-        MutableLiveData<List<Status>> mutableLiveData = new MutableLiveData<>();
-        bookmarkApi.BookmarkSave(IDuser,IDpost).enqueue(new Callback<List<Status>>() {
-            @Override
-            public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
-                mutableLiveData.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<List<Status>> call, Throwable t) {
-
-            }
-        });
-        return mutableLiveData;
-    }
 
 }

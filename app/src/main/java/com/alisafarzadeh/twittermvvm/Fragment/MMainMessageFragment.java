@@ -76,6 +76,14 @@ public class MMainMessageFragment extends Fragment {
         int id  = sharedpreferences.getInt("ID",-1);
         Log.d("iduser", "onViewCreated: "+id);
 
+        myViewModel.getAllPostViewModel().observe(getViewLifecycleOwner(), new Observer<List<Post>>() {
+            @Override
+            public void onChanged(List<Post> posts) {
+                adapter = new AllMessageRecyclerAdapter(posts,getActivity(),null);
+                recyclerView.setAdapter(adapter);
+            }
+        });
+        /*
         myViewModel.fetchUser2().observe(getViewLifecycleOwner(), new Observer<List<Post>>() {
             @Override
             public void onChanged(List<Post> posts) {
@@ -115,7 +123,7 @@ public class MMainMessageFragment extends Fragment {
                 Log.d("xtagf", "onChanged: "+postlist.size());
             }
         });
-        /*
+
         adapter.GetPrice(new AllMessageRecyclerAdapter.CallBackPrice() {
             @Override
             public void getAllPrice(Post post) {

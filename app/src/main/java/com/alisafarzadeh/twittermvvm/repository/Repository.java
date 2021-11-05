@@ -20,20 +20,11 @@ public class Repository {
         return getMessageResponse.getMyPostMutableLiveData(id);
     }
 
+    public LiveData<List<Post>> getAllMessageLiveData()
+    {
+        return getMessageResponse.getAllPostObserve();
+    }
 
 
-    //Bookmark
-    public LiveData<List<Status>> IsBookmarkRepo(String user , String post)
-    {
-        return getMessageResponse.IsBookmark(user,post);
-    }
-    public LiveData<List<Status>> BookmarkRemoveRepo(String user , String post)
-    {
-        return getMessageResponse.BookmarkRemove(user,post);
-    }
-    public LiveData<List<Status>> BookmarkSaveRepo(String user , String post)
-    {
-        return getMessageResponse.BookmarkSave(user,post);
-    }
 
 }

@@ -98,7 +98,8 @@ public class Post {
 
     @BindingAdapter("android:loadImageView")
     public static void loadImageView(ImageView imageView,String link_url){
-      Log.d("ccc", "localhost/MessageApp/"+link_url);
+      Log.d("ccc", "http://192.168.1.5/MessageApp/"+link_url);
+      Picasso.get().load("http://192.168.1.5/MessageApp/"+link_url).into(imageView);
     }
 
 

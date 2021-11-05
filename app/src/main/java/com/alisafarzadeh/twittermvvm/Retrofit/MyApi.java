@@ -7,6 +7,7 @@ import com.alisafarzadeh.twittermvvm.model.UserId;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -32,6 +33,8 @@ public interface MyApi {
     @GET("ShowPost.php")
     Call<List<Post>> ShowPost();
 
+    @GET("ShowPost.php")
+    Observable<List<Post>> ShowPostObserve();
 
     @FormUrlEncoded
     @POST("SendPost.php")

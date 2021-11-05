@@ -4,6 +4,7 @@ import com.alisafarzadeh.twittermvvm.model.Status;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -21,6 +22,11 @@ public interface BookmarkApi {
     Call<List<Status>> BookmarkRemove( @Field("Id_user") String user,
                                        @Field("Id_post") String post);
 
+
+    @FormUrlEncoded
+    @POST("BookmarkPost.php")
+    Observable<List<Status>> BookmarkSaveObserve(@Field("Id_user") String user,
+                                                 @Field("Id_post") String post);
 
     @FormUrlEncoded
     @POST("BookmarkPost.php")

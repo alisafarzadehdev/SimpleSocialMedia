@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyApi;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyRetrofit;
 import com.alisafarzadeh.twittermvvm.model.Post;
+import com.alisafarzadeh.twittermvvm.model.Status;
 import com.alisafarzadeh.twittermvvm.repository.Repository;
 
 import java.util.List;
@@ -55,6 +56,9 @@ public class MyViewModel extends ViewModel {
     }
 
 
+    public LiveData<List<Post>> getAllPostObserveViewModel(){
+        return repository.getAllMessageLiveData();
+    }
 
 
 }
