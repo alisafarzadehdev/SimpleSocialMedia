@@ -147,7 +147,7 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
                 sharedpreferences = context.getSharedPreferences(context.getPackageName()+"MySaveUser", Context.MODE_PRIVATE);
                 int id  = sharedpreferences.getInt("ID",-1);
                 Toast.makeText(context, id+"", Toast.LENGTH_SHORT).show();
-
+git
                 MyApi myApi = MyRetrofit.getMyRetrofit().create(MyApi.class);
                 myApi.BookmarkSave(id+"",posts.get(pos).getIdpost())
                         .enqueue(new Callback<List<Status>>() {
