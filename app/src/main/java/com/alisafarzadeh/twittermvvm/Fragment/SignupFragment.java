@@ -116,7 +116,6 @@ public class SignupFragment extends Fragment {
                     ((TextInputLayout)view.findViewById(R.id.TextinputPassword)).setErrorEnabled(false);
                 }
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
 
@@ -136,34 +135,6 @@ public class SignupFragment extends Fragment {
                 }else{
                     Toast.makeText(getActivity(), "اطلاعات را کامل کنید", Toast.LENGTH_SHORT).show();
                 }
-
-
-                /*
-                if(SignupUsernameEdit.getText().toString().length() > 6
-                        &&
-                        SignupPasswordEdit.getText().toString().length()>6)
-                {
-                    if (SignupImageImg.getDrawingCache()!=null)
-                    {
-                        Toast.makeText(getActivity(), "عکسدار", Toast.LENGTH_SHORT).show();
-                        SignupImageImg.buildDrawingCache();
-
-                        Signup(SignupNameEdit.getText().toString(),
-                                SignupUsernameEdit.getText().toString(),
-                                SignupPasswordEdit.getText().toString(),
-                                Utils.imagetoString(bitmap),
-                                SignupBioGraphyEdit.getText().toString());
-                    }else{
-                        Toast.makeText(getActivity(), "بی عکس", Toast.LENGTH_SHORT).show();
-                        Signup(SignupNameEdit.getText().toString(),
-                                SignupUsernameEdit.getText().toString(),
-                                SignupPasswordEdit.getText().toString(),
-                                null,
-                                SignupBioGraphyEdit.getText().toString());
-                    }
-                }
-
-*/
 
             }
         });
@@ -222,44 +193,11 @@ public class SignupFragment extends Fragment {
     void Signup(String Name, String Username, String Password, String Avatar, String Biography) {
         MyApi myApi = MyRetrofit.getMyRetrofit().create(MyApi.class);
 
-        /*
-        myApi.SignUpp(Name, Username, Password, Avatar, Biography).enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Log.d("xtag", "onResponse: "+response.body()+response.message());
-
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.d("xtag", "Error: "+call+":"+t.getMessage());
-
-            }
-        });
-
-         */
-
-
-
-                /*
-                new Callback<UserId>() {
-            @Override
-            public void onResponse(Call<UserId> call, Response<UserId> response) {
-                Log.d("xtag", "onResponse: "+response.body());
-            }
-
-            @Override
-            public void onFailure(Call<UserId> call, Throwable t) {
-                Log.d("xtag", "Error: "+t.getMessage());
-
-            }
-        });
-        */
         myApi.SignUp(Name, Username, Password, Avatar, Biography).enqueue(new Callback<List<UserId>>() {
             @Override
             public void onResponse(Call<List<UserId>> call, Response<List<UserId>> response) {
 
-                Log.d("yTAG", "onResponse: "+response.body().get(0).getUser());
+                Log.d("yTAG", "onResponse: "+response.body());
 
                 editor.putBoolean("IsRegister",true);
                 editor.putInt("ID", Integer.parseInt(response.body().get(0).getUser()));

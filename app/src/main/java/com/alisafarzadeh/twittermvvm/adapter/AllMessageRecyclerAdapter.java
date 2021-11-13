@@ -2,6 +2,7 @@ package com.alisafarzadeh.twittermvvm.adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +19,12 @@ import com.alisafarzadeh.twittermvvm.Retrofit.MyRetrofit;
 import com.alisafarzadeh.twittermvvm.model.Post;
 import com.alisafarzadeh.twittermvvm.R;
 import com.alisafarzadeh.twittermvvm.databinding.LayoutRecyclerallmessageBinding;
+import com.alisafarzadeh.twittermvvm.model.Save;
 import com.alisafarzadeh.twittermvvm.model.Status;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,9 +33,10 @@ import retrofit2.Response;
 public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRecyclerAdapter.MyViewHolder> {
 
     List<Post> posts = new ArrayList<>();
+
     Context context;
     OnMyClickListener onMyClickListener;
-    
+
 
     public AllMessageRecyclerAdapter(List<Post> posts, Context context,OnMyClickListener on) {
         this.posts = posts;
@@ -54,17 +58,20 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
         int id  = sharedpreferences.getInt("ID",-1);
         BookmarkApi bookmarkApi = MyRetrofit.getMyRetrofit().create(BookmarkApi.class);
         Log.d("cccz", "isBookmark: "+post+":"+id);
+
+
+
         bookmarkApi.IsBookmark(id+"",post+"").enqueue(new Callback<List<Status>>() {
             @Override
             public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
 
                 if (response.body().get(0).getStatus().equals("0"))
                 {
-                    Log.d("qqqqw", "onResponse: ");
+                    Log.d("qqqqw", "onResponse: no");
                     img.setImageResource(R.drawable.ic_bookmark_border);
 
                 }else{
-                    Log.d("qqqqe", "onResponse: ");
+                    Log.d("qqqqe", "onResponse: yes");
                     img.setImageResource(R.drawable.ic_bookmark);
                 }
             }
@@ -84,7 +91,13 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
         //holder.binding.favitem.setChecked();
         holder.binding.setAllMessage(posts.get(position));
 
+        int randomblue = new Random().nextInt(100);
+        int randomred = new Random().nextInt(100);
+        int randomgreen = new Random().nextInt(100);
+        holder.binding.ConstraintItemAllMessage.setBackgroundColor(Color.argb(255,randomred,randomgreen,randomblue));
+        //isBookmark(posts.get(position).getIdpost(), holder.binding.bookmarkitempost);
         isBookmark(posts.get(position).getIdpost(), holder.binding.bookmarkitempost);
+
 
         holder.binding.bookmarkitempost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +108,7 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
                 int iduser  = sharedpreferences.getInt("ID",-1);
                 String idpost = posts.get(pos).getIdpost();
 
+                Toast.makeText(context, idpost+"    :   "+iduser, Toast.LENGTH_SHORT).show();
                 BookmarkApi myApi = MyRetrofit.getMyRetrofit().create(BookmarkApi.class);
                 myApi.IsBookmark(iduser+"",idpost).enqueue(new Callback<List<Status>>() {
                     @Override

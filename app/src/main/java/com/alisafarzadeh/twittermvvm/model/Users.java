@@ -2,18 +2,28 @@ package com.alisafarzadeh.twittermvvm.model;
 
 public class Users {
 
+    String IdUser;
     String Name ;
     String Username ;
     String Password ;
     String Avatar ;
     String Biography ;
 
-    public Users(String name, String username, String password, String avatar, String biography) {
+    public Users(String idUser, String name, String username, String password, String avatar, String biography) {
+        IdUser = idUser;
         Name = name;
         Username = username;
         Password = password;
         Avatar = avatar;
         Biography = biography;
+    }
+
+    public String getIdUser() {
+        return IdUser;
+    }
+
+    public void setIdUser(String idUser) {
+        IdUser = idUser;
     }
 
     public String getName() {

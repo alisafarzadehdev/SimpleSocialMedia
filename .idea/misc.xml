@@ -3,18 +3,29 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/drawable/bg_text.xml" value="0.2078125" />
+        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/drawable/ic_baseline_folder_24.xml" value="0.49875" />
+        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.1015625" />
+        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.1015625" />
+        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1015625" />
+        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/drawable/ic_bookmark.xml" value="0.2078125" />
+        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/drawable/ic_bookmark_border.xml" value="0.2078125" />
+        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2078125" />
+        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/font/ddd.xml" value="0.221875" />
         <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/layout/activity_loginsignup.xml" value="0.1" />
-        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/layout/activity_send_message.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/layout/activity_send_message.xml" value="0.5" />
         <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/layout/fragment_login.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/layout/fragment_m_about.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/layout/fragment_m_message_saved.xml" value="0.17760416666666667" />
         <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/layout/fragment_m_my_post.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/layout/fragment_main.xml" value="0.17" />
-        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/layout/fragment_signup.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/layout/fragment_signup.xml" value="0.5" />
+        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/layout/fragment_sort_message.xml" value="0.46" />
         <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/layout/layout_headerdrawer.xml" value="0.19166666666666668" />
-        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/layout/layout_recyclerallmessage.xml" value="0.25" />
+        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/layout/layout_recyclerallmessage.xml" value="0.6105263157894737" />
         <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/menu/mmenu_navigationdrawer.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/alisafarzadehdev/AndroidStudioProjects/TwitterMVVM/app/src/main/res/xml/network_sequrity.xml" value="0.1" />
       </map>
     </option>
   </component>
@@ -23,5 +34,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.67" />
+      </ProjectState>
+    </option>
   </component>
 </project>

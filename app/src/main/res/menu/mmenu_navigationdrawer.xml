@@ -2,13 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/MMainMessageFragment"
-        android:title="main"/>
+        android:title="صفحه ی اصلی"
+        android:icon="@drawable/ic_baseline_home_24"/>
+
     <item android:id="@+id/MMessageSavedFragment"
-        android:title="saved"/>
+        android:title="ذخیره شده"
+        android:icon="@drawable/ic_bookmark"/>
+
     <item android:id="@+id/MMyPostFragment"
-        android:title="Home"/>
+        android:title="پست های من"
+        android:icon="@drawable/ic_baseline_person_24"/>
+
+
+    <item android:id="@+id/sortMessageFragment"
+        android:title="دسته بندی"
+        android:icon="@drawable/ic_baseline_folder_24"
+        />
+
     <item android:id="@+id/MAboutFragment"
-        android:title="about"/>
+        android:title="درباره"
+        android:icon="@drawable/ic_baseline_info_24"
+        />
 
 
 </menu>

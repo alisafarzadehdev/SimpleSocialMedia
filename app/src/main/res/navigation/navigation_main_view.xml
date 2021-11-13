@@ -25,4 +25,9 @@
         android:name="com.alisafarzadeh.twittermvvm.Fragment.MMyPostFragment"
         android:label="fragment_m_my_post"
         tools:layout="@layout/fragment_m_my_post" />
+    <fragment
+        android:id="@+id/sortMessageFragment"
+        android:name="com.alisafarzadeh.twittermvvm.Fragment.SortMessageFragment"
+        android:label="fragment_sort_message"
+        tools:layout="@layout/fragment_sort_message" />
 </navigation>

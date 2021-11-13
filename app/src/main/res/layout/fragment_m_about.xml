@@ -3,14 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.MAboutFragment">
+    tools:context=".Fragment.MAboutFragment"
+    android:background="@color/one">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="About"
-        android:gravity="center"
-        android:textSize="26sp" />
+     <ScrollView
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:text="@string/about"
+             android:padding="8dp"
+             android:layout_margin="8dp"
+             android:lineSpacingExtra="18dp"
+             style="@style/textPrimery"
+             android:textColor="@color/three"
+             android:textSize="32sp"
+             />
+     </ScrollView>
 
 </FrameLayout>

@@ -9,109 +9,123 @@
             />
     </data>
 
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ConstraintItemAllMessage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:background="@color/one"
+        android:padding="4dp">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:cardElevation="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="4dp"
+            app:cardBackgroundColor="@color/twe"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ConstraintItemAllMessage"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
-                <CheckBox
-                    android:id="@+id/favitem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="@{AllMessage.live}"
-                    android:text="fav?"
-                    android:visibility="gone"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:loadImageProfile="@{AllMessage.avatar}"
+                    app:civ_border_color="@color/three"
+                    app:civ_border_width="1dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/contentallmessage"
-                    tools:layout_editor_absoluteY="302dp" />
-
-                <TextView
-                    android:id="@+id/titleallmessage"
-                    android:layout_width="95dp"
-                    android:layout_height="wrap_content"
-                    android:text="@{AllMessage.title,default=title}"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView"
-                    app:layout_constraintStart_toStartOf="@+id/imageView"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-                <TextView
-                    android:id="@+id/contentallmessage"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="24dp"
-                    android:minLines="3"
-                    android:text="@{AllMessage.content,default=content}"
-                    app:layout_constraintEnd_toStartOf="@+id/textView2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/titleallmessage" />
-
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_marginEnd="24dp"
+                    android:layout_width="100dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="4dp"
                     android:loadImageView="@{AllMessage.media}"
-                    app:layout_constraintEnd_toStartOf="@+id/textView2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{AllMessage.namecategory,default=category}"
-                    app:layout_constraintEnd_toEndOf="@+id/contentallmessage"
-                    app:layout_constraintTop_toBottomOf="@+id/contentallmessage" />
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:loadImageView="@{AllMessage.avatar}"
+                    android:scaleType="fitXY"
+                    android:shadowColor="@color/text"
+                    android:shadowDx="4"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/titleallmessage"
+                    style="@style/textPrimery"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:text="@{AllMessage.nameuser,default=user}"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView2"
-                    app:layout_constraintTop_toTopOf="@+id/imageView2" />
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:text="@{AllMessage.title}"
+                    android:textColor="@color/text"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/imageView" />
 
                 <ImageView
                     android:id="@+id/bookmarkitempost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/contentallmessage"
+                    app:layout_constraintTop_toBottomOf="@+id/textView"
                     app:srcCompat="@drawable/ic_bookmark_border" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    style="@style/textSecend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{AllMessage.namecategory}"
+                    android:textSize="11sp"
+                    app:layout_constraintEnd_toEndOf="@+id/contentallmessage"
+                    app:layout_constraintTop_toBottomOf="@+id/contentallmessage" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    style="@style/textPrimery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="right"
+                    android:text="@{AllMessage.nameuser,default=user}"
+                    android:textColor="@color/text"
+                    app:cardBackgroundColor="#252525"
+                    app:layout_constraintBottom_toBottomOf="@+id/profile_image"
+                    app:layout_constraintEnd_toStartOf="@+id/profile_image"
+                    app:layout_constraintTop_toTopOf="@+id/profile_image" />
+
+                <TextView
+                    android:id="@+id/contentallmessage"
+                    style="@style/textSecend"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:minLines="2"
+                    android:textColor="@color/textSec"
+                    android:text="@{AllMessage.content}"
+                    app:layout_constraintEnd_toEndOf="@+id/titleallmessage"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/titleallmessage"
+                    app:layout_constraintTop_toBottomOf="@+id/titleallmessage" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.cardview.widget.CardView>
 
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>

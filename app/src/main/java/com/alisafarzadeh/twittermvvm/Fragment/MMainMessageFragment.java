@@ -3,6 +3,8 @@ package com.alisafarzadeh.twittermvvm.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,9 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +34,7 @@ import com.alisafarzadeh.twittermvvm.model.Post;
 import com.alisafarzadeh.twittermvvm.R;
 import com.alisafarzadeh.twittermvvm.adapter.AllMessageRecyclerAdapter;
 import com.alisafarzadeh.twittermvvm.model.Status;
+import com.alisafarzadeh.twittermvvm.model.UserId;
 import com.alisafarzadeh.twittermvvm.viewmodel.MyViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -39,7 +46,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MMainMessageFragment extends Fragment {
+public class MMainMessageFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     RecyclerView recyclerView;
     AllMessageRecyclerAdapter adapter;
@@ -47,17 +54,32 @@ public class MMainMessageFragment extends Fragment {
     List<Post> postlist = new ArrayList<>();
     MyViewModel myViewModel;
 
+    SwipeRefreshLayout refreshLayout;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_main, container, false);
+        refreshLayout = v.findViewById(R.id.SwipeAllMessage);
+        refreshLayout.setOnRefreshListener(this);
         flat = v.findViewById(R.id.SendMessageflatbtn);
         recyclerView = v.findViewById(R.id.MessageMainRecycler);
         myViewModel = new ViewModelProvider(this).get(MyViewModel.class);
 
-        adapter = new AllMessageRecyclerAdapter(postlist, getActivity(),null);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(recyclerView.getContext(),linearLayoutManager.getOrientation());
 
+        dividerItemDecoration.setDrawable(getResources().getDrawable(android.R.drawable.divider_horizontal_bright));
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
+        adapter = new AllMessageRecyclerAdapter(postlist, getActivity(),null);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         return v;
     }
 
@@ -72,14 +94,38 @@ public class MMainMessageFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+
+
         sharedpreferences = getActivity().getSharedPreferences(getActivity().getPackageName()+"MySaveUser", Context.MODE_PRIVATE);
         int id  = sharedpreferences.getInt("ID",-1);
         Log.d("iduser", "onViewCreated: "+id);
 
-        myViewModel.getAllPostViewModel().observe(getViewLifecycleOwner(), new Observer<List<Post>>() {
+        myViewModel.getAllPostObserveViewModel().observe(getViewLifecycleOwner(), new Observer<List<Post>>() {
             @Override
             public void onChanged(List<Post> posts) {
-                adapter = new AllMessageRecyclerAdapter(posts,getActivity(),null);
+                Log.d("sss", "onChanged: "+posts.size());
+                postlist = posts;
+                recyclerView.scrollToPosition(postlist.size()-1);
+                adapter = new AllMessageRecyclerAdapter(posts, getActivity(), new AllMessageRecyclerAdapter.OnMyClickListener() {
+                    @Override
+                    public void onButtonClicked(Post post) {
+
+                        Log.d("lllllly",post.getIdpost()+""+post.getNameuser());
+
+                    }
+
+                    @Override
+                    public void onGetIDButtonClicked(int post) {
+                        Log.d("llllllx",post+"");
+
+                    }
+
+                    @Override
+                    public void onPositionitem(int position) {
+                        Log.d("llllll",position+"");
+                    }
+                });
                 recyclerView.setAdapter(adapter);
             }
         });
@@ -152,6 +198,47 @@ public class MMainMessageFragment extends Fragment {
                 startActivity(new Intent(getActivity(), SendMessageActivity.class));
             }
         });
+
+    }
+
+    @Override
+    public void onRefresh() {
+
+        myViewModel.getAllPostObserveViewModel().observe(getViewLifecycleOwner(), new Observer<List<Post>>() {
+            @Override
+            public void onChanged(List<Post> posts) {
+                Log.d("sss", "onChanged: "+posts.size());
+                postlist = posts;
+                adapter = new AllMessageRecyclerAdapter(posts, getActivity(), new AllMessageRecyclerAdapter.OnMyClickListener() {
+                    @Override
+                    public void onButtonClicked(Post post) {
+                        Log.d("lllllly",post.getIdpost()+""+post.getNameuser());
+
+                    }
+
+                    @Override
+                    public void onGetIDButtonClicked(int post) {
+                        Log.d("llllllx",post+"");
+
+                    }
+
+                    @Override
+                    public void onPositionitem(int position) {
+                        Log.d("llllll",position+"");
+                    }
+                });
+                recyclerView.setAdapter(adapter);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshLayout.setRefreshing(false);
+                    }
+                }, 2000);
+
+            }
+        });
+
 
     }
 }

@@ -8,62 +8,65 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/one">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/linearLayoutCompat2"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/LoginBTN"
+            style="@style/textPrimery"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:background="@color/three"
+            android:text="ورود"
+            app:layout_constraintEnd_toEndOf="@+id/TextinputPasswordLogin"
+            app:layout_constraintStart_toStartOf="@+id/TextinputPasswordLogin"
+            app:layout_constraintTop_toBottomOf="@+id/TextinputPasswordLogin" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/TextinputUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColorHint="#eeeeee"
+            app:layout_constraintBottom_toTopOf="@+id/guideline6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/LoginUsernameEdit"
+                style="@style/textPrimery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/one"
+                android:hint="نام کاربری" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/TextinputPasswordLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:textColorHint="#eeeeee"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@+id/guideline6">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TextinputUserName"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/LoginPasswordEdit"
+                style="@style/textPrimery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:background="@color/one"
+                android:hint="گذرواژه" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/LoginUsernameEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Username" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TextinputPasswordLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextinputUserName">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/LoginPasswordEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Password" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/LoginBTN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ورود"
-                android:layout_gravity="center"/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/logintosignupBTN"
@@ -71,9 +74,17 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Button"
+            android:text="ثبت نام"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

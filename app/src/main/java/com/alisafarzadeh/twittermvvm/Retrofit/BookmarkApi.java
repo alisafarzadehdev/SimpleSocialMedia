@@ -1,5 +1,7 @@
 package com.alisafarzadeh.twittermvvm.Retrofit;
 
+import com.alisafarzadeh.twittermvvm.model.Post;
+import com.alisafarzadeh.twittermvvm.model.Save;
 import com.alisafarzadeh.twittermvvm.model.Status;
 
 import java.util.List;
@@ -22,16 +24,16 @@ public interface BookmarkApi {
     Call<List<Status>> BookmarkRemove( @Field("Id_user") String user,
                                        @Field("Id_post") String post);
 
-
-    @FormUrlEncoded
-    @POST("BookmarkPost.php")
-    Observable<List<Status>> BookmarkSaveObserve(@Field("Id_user") String user,
-                                                 @Field("Id_post") String post);
-
     @FormUrlEncoded
     @POST("BookmarkPost.php")
     Call<List<Status>> BookmarkSave( @Field("Id_user") String user,
                                      @Field("Id_post") String post);
+
+    @FormUrlEncoded
+    @POST("MySavedPostShow.php")
+    Observable<List<Post>> ShowSave(@Field("Id") int id);
+
+
 
 
 }

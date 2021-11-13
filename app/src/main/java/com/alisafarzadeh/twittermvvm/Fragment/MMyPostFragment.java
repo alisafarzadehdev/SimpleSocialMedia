@@ -11,6 +11,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,12 +22,19 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.alisafarzadeh.twittermvvm.R;
+import com.alisafarzadeh.twittermvvm.Retrofit.MyApi;
+import com.alisafarzadeh.twittermvvm.Retrofit.MyRetrofit;
 import com.alisafarzadeh.twittermvvm.adapter.AllMessageRecyclerAdapter;
 import com.alisafarzadeh.twittermvvm.model.Post;
+import com.alisafarzadeh.twittermvvm.model.Status;
 import com.alisafarzadeh.twittermvvm.viewmodel.MyViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MMyPostFragment extends Fragment {
 
@@ -41,7 +49,15 @@ public class MMyPostFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_m_my_post, container, false);
         recyclerView = v.findViewById(R.id.MyMessageRecycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(recyclerView.getContext(),linearLayoutManager.getOrientation());
+
+        dividerItemDecoration.setDrawable(getResources().getDrawable(android.R.drawable.divider_horizontal_bright));
+
+        recyclerView.addItemDecoration(dividerItemDecoration);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         myViewModel = new ViewModelProvider(this).get(MyViewModel.class);
         return v;
@@ -53,6 +69,8 @@ public class MMyPostFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         sharedpreferences = getActivity().getSharedPreferences(getActivity().getPackageName()+"MySaveUser", Context.MODE_PRIVATE);
         int id  = sharedpreferences.getInt("ID",-1);
+
+        /*
         myViewModel.getMyPostViewModel(id+"").observe(getViewLifecycleOwner(), new Observer<List<Post>>() {
             @Override
             public void onChanged(List<Post> posts) {
@@ -78,5 +96,50 @@ public class MMyPostFragment extends Fragment {
             }
         });
 
+         */
+
+        myViewModel.MyMessageViewModel(id+"").observe(getViewLifecycleOwner(), new Observer<List<Post>>() {
+            @Override
+            public void onChanged(List<Post> posts) {
+                adapter = new AllMessageRecyclerAdapter(posts, getActivity(), new AllMessageRecyclerAdapter.OnMyClickListener() {
+                    @Override
+                    public void onButtonClicked(Post post) {
+                        Log.d("eeet", "onButtonClicked: "+post.getIdpost());
+                        DeleteID(Integer.parseInt(post.getIdpost()));
+
+                    }
+
+                    @Override
+                    public void onGetIDButtonClicked(int post) {
+                        Log.d("eeet", "onGetIDButtonClicked: "+post);
+                    }
+
+                    @Override
+                    public void onPositionitem(int position) {
+                        Log.d("eeet", "onPositionitem: "+position);
+
+                    }
+                });
+                recyclerView.setAdapter(adapter);
+            }
+        });
+
     }
+
+    public void DeleteID(int id)
+    {
+        MyApi api = MyRetrofit.getMyRetrofit().create(MyApi.class);
+        api.DeletePost(id).enqueue(new Callback<List<Status>>() {
+            @Override
+            public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
+                Log.d("sssx", "response: "+response.body().get(0).getStatus());
+            }
+
+            @Override
+            public void onFailure(Call<List<Status>> call, Throwable t) {
+                Log.d("sssx", "onFailure: "+t.getMessage());
+            }
+        });
+    }
+
 }

@@ -8,117 +8,183 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/one">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/linearLayoutCompat"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/TextinputBiography"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:hint="بیوگرافی"
+            android:textColorHint="#eeeeee"
+            app:hintAnimationEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/guideline8"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/guideline7">
 
-            <ImageView
-                android:id="@+id/SignupAvatarImg"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                app:srcCompat="@android:drawable/ic_menu_gallery" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TextinputName"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/SignupBiographyEdit"
+                style="@style/textPrimery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:hintAnimationEnabled="true"
-                >
+                android:background="@drawable/bg_text" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/SignupNameEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="نام نمایشی"
-                    />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/TextinputUserName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="نام کاربری"
+            android:textColorHint="#eeeeee"
+            app:layout_constraintBottom_toTopOf="@+id/TextinputBiography"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/guideline6">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TextinputUserName"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/SignupUsernameEdit"
+                style="@style/textPrimery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:hint="نام کاربری"
-                app:hintAnimationEnabled="true"
-                >
+                android:background="@drawable/bg_text"
+                android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                android:inputType="textPersonName" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/SignupUsernameEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/SignupBTN"
+            style="@style/textPrimery"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_text"
+            android:backgroundTint="@color/three"
+            android:text="ثبت نام"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/guideline8" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TextinputPassword"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/TextinputPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="گذرواژه"
+            android:textColorHint="#eeeeee"
+            app:hintAnimationEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/TextinputUserName"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/guideline5">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/SignupPasswordEdit"
+                style="@style/textPrimery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:hintAnimationEnabled="true"
-                android:hint="گذرواژه"
-                >
+                android:background="@drawable/bg_text"
+                android:inputType="textPassword" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/SignupPasswordEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
+        <ImageView
+            android:id="@+id/SignupAvatarImg"
+            android:layout_width="120dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toTopOf="@+id/guideline4"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_image_24" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TextinputBiography"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/TextinputName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="نام نمایشی"
+            android:textColorHint="#eeeeee"
+            app:hintAnimationEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/TextinputPassword"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/guideline4">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/SignupNameEdit"
+                style="@style/textPrimery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:hint="بیوگرافی"
-                app:hintAnimationEnabled="true"
-                >
+                android:background="@drawable/bg_text" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/SignupBiographyEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                     />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/SignupBTN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ورود"
-                android:layout_gravity="center"/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <Button
             android:id="@+id/signuptologinBTN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="Button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:text="ورود"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/guideline9" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.15" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.30" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.45" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.60" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.75" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.90" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

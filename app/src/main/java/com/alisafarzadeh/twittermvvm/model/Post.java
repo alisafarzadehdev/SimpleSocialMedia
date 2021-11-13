@@ -1,12 +1,22 @@
 package com.alisafarzadeh.twittermvvm.model;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import kotlin.jvm.JvmStatic;
 
@@ -21,6 +31,26 @@ public class Post {
     String avatar;
     String iduser;
     boolean live;
+
+    String Biography;
+
+    public String getBiography() {
+        return Biography;
+    }
+
+    public void setBiography(String biography) {
+        Biography = biography;
+    }
+
+    String idbookmark;
+
+    public String getIdbookmark() {
+        return idbookmark;
+    }
+
+    public void setIdbookmark(String idbookmark) {
+        this.idbookmark = idbookmark;
+    }
 
     public boolean isLive() {
         return live;
@@ -96,12 +126,56 @@ public class Post {
 
 
 
-    @BindingAdapter("android:loadImageView")
-    public static void loadImageView(ImageView imageView,String link_url){
+    @BindingAdapter("android:loadImageProfile")
+    public static void loadImageProfile(ImageView imageView,String link_url){
       Log.d("ccc", "http://192.168.1.5/MessageApp/"+link_url);
-      Picasso.get().load("http://192.168.1.5/MessageApp/"+link_url).into(imageView);
+        String URLIP = "http://94.232.169.217/MessageApp/";
+        String URL = "http://androidhelp.ir/MessageApp/";
+        String URLLOCAL =  "http://192.168.1.5/MessageApp/";
+
+        Picasso.get().load(URLLOCAL+link_url).into(imageView);
     }
 
+    @BindingAdapter("android:loadImageView")
+    public static void loadImageView(ImageView imageView,String link_url){
+        Log.d("ccc", "http://192.168.1.5/MessageApp/"+link_url);
+        String URLIP = "http://94.232.169.217/MessageApp/";
+
+        String URLLOCAL =  "http://192.168.1.5/MessageApp/";
+        String URL = "http://androidhelp.ir/MessageApp/";
+        Picasso.get().load(URLLOCAL+link_url)
+                .transform(new Transformation() {
+                    @Override
+                    public Bitmap transform(Bitmap source) {
+
+                        Bitmap output = Bitmap.createBitmap(source.getWidth(), source
+                                .getHeight(), Bitmap.Config.ARGB_8888);
+                        Canvas canvas = new Canvas(output);
+
+                        final int   color   = 0xff424242;
+                        final Paint paint   = new Paint();
+                        final Rect  rect    = new Rect(0, 0, source.getWidth(), source.getHeight());
+                        final RectF rectF   = new RectF(rect);
+                        final float roundPx = 6;
+
+                        paint.setAntiAlias(true);
+                        canvas.drawARGB(0, 0, 0, 0);
+                        paint.setColor(color);
+                        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
+                        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+                        canvas.drawBitmap(source, rect, rect, paint);
+                        source.recycle();
+
+                        return output;
+                    }
+
+                    @Override
+                    public String key() {
+                        return "rounded image";
+                    }
+                }).resize(130,130).centerCrop().into(imageView);
+    }
 
 
 

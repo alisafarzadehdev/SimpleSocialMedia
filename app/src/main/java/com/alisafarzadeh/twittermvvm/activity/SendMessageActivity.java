@@ -2,7 +2,11 @@ package com.alisafarzadeh.twittermvvm.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,8 +16,10 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.alisafarzadeh.twittermvvm.Retrofit.PostApi;
 import com.alisafarzadeh.twittermvvm.model.Category;
 import com.alisafarzadeh.twittermvvm.model.Status;
 import com.alisafarzadeh.twittermvvm.R;
@@ -21,7 +27,9 @@ import com.alisafarzadeh.twittermvvm.Retrofit.MyApi;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyRetrofit;
 import com.alisafarzadeh.twittermvvm.Util.Utils;
 import com.alisafarzadeh.twittermvvm.databinding.ActivitySendMessageBinding;
+import com.alisafarzadeh.twittermvvm.viewmodel.MyViewModel;
 import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.squareup.picasso.Transformation;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,14 +44,19 @@ public class SendMessageActivity extends AppCompatActivity {
     ActivitySendMessageBinding binding;
     SharedPreferences sharedpreferences;
     MaterialSpinner spinner;
+    LifecycleOwner owner;
+    ProgressDialog pd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_send_message);
+        pd = new ProgressDialog(SendMessageActivity.this);
+
         binding = DataBindingUtil.setContentView(this,R.layout.activity_send_message);
         sharedpreferences = getSharedPreferences(getPackageName()+"MySaveUser", Context.MODE_PRIVATE);
         spinner = (MaterialSpinner) findViewById(R.id.CategorySendPost);
         getCategory();
+        owner = this;
 
         binding.HeaderSendPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,10 +64,21 @@ public class SendMessageActivity extends AppCompatActivity {
                 imageChooser();
             }
         });
+
+
         binding.BTNSendPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendPost();
+                //sendPost();
+                pd.setMessage("صبر کنید");
+                pd.show();
+                sendPostObserv(SendMessageActivity.this,
+                        owner,
+                        Utils.imagetoString(bitmap),
+                        binding.TitleSendPost.getText().toString(),
+                        binding.MessageSendPost.getText().toString(),
+                        sharedpreferences.getInt("ID",-1),
+                        binding.CategorySendPost.getSelectedIndex()+1);
             }
         });
 
@@ -104,22 +128,30 @@ public class SendMessageActivity extends AppCompatActivity {
             }
         });
 
-        //spinner.setItems("Ice Cream Sandwich", "Jelly Bean", "KitKat", "Lollipop", "Marshmallow");
-        /*spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
-            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-
-            }
-        });
-
-         */
     }
 
 
     Bitmap bitmap;
+
+    //sendpostobserv
+    public void sendPostObserv(Context context, LifecycleOwner lifecycleOwner, String media, String title, String content, int user, int category){
+        MyViewModel viewmodel = new ViewModelProvider(this).get(MyViewModel.class);
+        viewmodel.SendPostObserveViewModel(media, title, content, user, category)
+                .observe(lifecycleOwner, new Observer<List<Status>>() {
+                    @Override
+                    public void onChanged(List<Status> statuses) {
+                        Toast.makeText(context, "ارسال شد.", Toast.LENGTH_SHORT).show();
+                        pd.hide();
+                        startActivity(new Intent(SendMessageActivity.this,MainActivity.class));
+                    }
+                });
+
+    }
+
     public void sendPost(){
 
-        MyApi myApi = MyRetrofit.getMyRetrofit().create(MyApi.class);
+        PostApi myApi = MyRetrofit.getMyRetrofit().create(PostApi.class);
         binding.HeaderSendPost.buildDrawingCache();
 
         myApi.SendPost(
@@ -143,5 +175,8 @@ public class SendMessageActivity extends AppCompatActivity {
 
 
     }
+
+
+
 
 }

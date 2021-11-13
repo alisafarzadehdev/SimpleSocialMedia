@@ -1,13 +1,17 @@
 package com.alisafarzadeh.twittermvvm.repository;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.alisafarzadeh.twittermvvm.Retrofit.BookmarkApi;
+import com.alisafarzadeh.twittermvvm.Retrofit.CategoryApi;
+import com.alisafarzadeh.twittermvvm.Retrofit.PostApi;
 import com.alisafarzadeh.twittermvvm.model.Post;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyApi;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyRetrofit;
+import com.alisafarzadeh.twittermvvm.model.Save;
 import com.alisafarzadeh.twittermvvm.model.Status;
 
 import java.util.List;
@@ -26,7 +30,8 @@ public class GetMessageResponse {
     MyApi MessageApi = MyRetrofit.getMyRetrofit().create(MyApi.class);
     BookmarkApi bookmarkApi = MyRetrofit.getMyRetrofit().create(BookmarkApi.class);
 
-    //AllMessage
+
+    /*
     public MutableLiveData<List<Post>> getAllMessageMutableLiveData()
     {
         MutableLiveData<List<Post>> mutableLiveData = new MutableLiveData<>();
@@ -43,11 +48,30 @@ public class GetMessageResponse {
         });
         return mutableLiveData;
     }
+     */
+
+
+    public MutableLiveData<List<Post>> MyPostResponse(String id){
+        PostApi MessageApi = MyRetrofit.getMyRetrofit().create(PostApi.class);
+        MutableLiveData<List<Post>> mutable = new MutableLiveData<>();
+        compositeDisposable.add(MessageApi.MyPostShowObserv(id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(movies -> {
+                    if (movies!=null)
+                    {
+                        mutable.setValue(movies);
+                    }
+                }));
+        return mutable;
+    }
+
 
     //MyMessage
     public MutableLiveData<List<Post>> getMyPostMutableLiveData(String id){
+        PostApi postApi = MyRetrofit.getMyRetrofit().create(PostApi.class);
         MutableLiveData<List<Post>> mutableLiveData = new MutableLiveData<>();
-        MessageApi.MyPostShow(id).enqueue(new Callback<List<Post>>() {
+        postApi.MyPostShow(id).enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
                 mutableLiveData.setValue(response.body());
@@ -64,16 +88,35 @@ public class GetMessageResponse {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     public MutableLiveData<List<Post>> getAllPostObserve()
     {
+        PostApi MessageApi = MyRetrofit.getMyRetrofit().create(PostApi.class);
         MutableLiveData<List<Post>> mutable = new MutableLiveData<>();
         compositeDisposable.add(MessageApi.ShowPostObserve()
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribeOn(Schedulers.newThread())
-        .subscribe(new Consumer<List<Post>>() {
-            @Override
-            public void accept(List<Post> posts) throws Throwable {
-                mutable.setValue(posts);
-            }
-        }));
+        .subscribeOn(Schedulers.io())
+                .subscribe(movies -> {
+                    if (movies!=null)
+                    {
+                        mutable.setValue(movies);
+                    }
+                }));
+        return mutable;
+    }
+
+
+    public MutableLiveData<List<Status>> SendPostObservResponse
+            (String media,String title,String content,int user,int category)
+    {
+        PostApi PostApi = MyRetrofit.getMyRetrofit().create(PostApi.class);
+        MutableLiveData<List<Status>> mutable = new MutableLiveData<>();
+        compositeDisposable.add(PostApi.SendPostObserv(media, title, content, user, category)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(movies -> {
+                    if (movies!=null)
+                    {
+                        mutable.setValue(movies);
+                    }
+                }));
         return mutable;
     }
     /*
@@ -90,4 +133,40 @@ public class GetMessageResponse {
     */
 
 
+
+
+
+    public MutableLiveData<List<Post>> ShowSavePostResponse
+            (int id)
+    {
+        BookmarkApi bookmarkShowApi = MyRetrofit.getMyRetrofit().create(BookmarkApi.class);
+        MutableLiveData<List<Post>> mutable = new MutableLiveData<>();
+        compositeDisposable.add(bookmarkShowApi.ShowSave(id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(movies -> {
+                    if (movies!=null)
+                    {
+                        mutable.setValue(movies);
+                    }
+                }));
+        return mutable;
+    }
+
+
+
+    public MutableLiveData<List<Post>> ShowWithCategory(int nameCategory)
+    {
+        CategoryApi categoryApi = MyRetrofit.getMyRetrofit().create(CategoryApi.class);
+        MutableLiveData<List<Post>> mutable = new MutableLiveData<>();
+        compositeDisposable.add(categoryApi.ShowWithCat(nameCategory)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(posts -> {
+            if (posts!=null) {
+                mutable.setValue(posts);
+            }
+        }));
+        return mutable;
+    }
 }
