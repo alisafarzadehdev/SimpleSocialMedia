@@ -46,7 +46,8 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutRecyclerallmessageBinding binding =  DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.layout_recyclerallmessage,parent,false);
+        LayoutRecyclerallmessageBinding binding =
+                DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.layout_recyclerallmessage,parent,false);
         return new MyViewHolder(binding);
     }
 
@@ -121,6 +122,7 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
                         {
                             holder.binding.bookmarkitempost.setImageResource(R.drawable.ic_bookmark_border);
                             removetoBookmark(iduser+"",idpost);
+
                         }
                     }
                     @Override
@@ -270,12 +272,14 @@ git
             if (view.getId() == binding.ConstraintItemAllMessage.getId()){
                 //onMyClickListener(view.getId());
                 onMyClickListener.onButtonClicked(posts.get(getAdapterPosition()));
-            }
-            if (view.getId() == binding.bookmarkitempost.getId()){
-                //onMyClickListener(view.getId());
+
                 int id = Integer.parseInt(posts.get(getAdapterPosition()).getIdpost());
                 onMyClickListener.onGetIDButtonClicked(id);
                 onMyClickListener.onPositionitem(getAdapterPosition());
+            }
+            if (view.getId() == binding.bookmarkitempost.getId()){
+                //onMyClickListener(view.getId());
+
             }
         }
     }

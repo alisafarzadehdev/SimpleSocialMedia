@@ -25,6 +25,7 @@ import com.alisafarzadeh.twittermvvm.R;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyApi;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyRetrofit;
 import com.alisafarzadeh.twittermvvm.adapter.AllMessageRecyclerAdapter;
+import com.alisafarzadeh.twittermvvm.adapter.MyPostRecycler;
 import com.alisafarzadeh.twittermvvm.model.Post;
 import com.alisafarzadeh.twittermvvm.model.Status;
 import com.alisafarzadeh.twittermvvm.viewmodel.MyViewModel;
@@ -39,7 +40,7 @@ import retrofit2.Response;
 public class MMyPostFragment extends Fragment {
 
     RecyclerView recyclerView;
-    AllMessageRecyclerAdapter adapter;
+    MyPostRecycler adapter;
     List<Post> postlist = new ArrayList<>();
     MyViewModel myViewModel;
 
@@ -101,7 +102,27 @@ public class MMyPostFragment extends Fragment {
         myViewModel.MyMessageViewModel(id+"").observe(getViewLifecycleOwner(), new Observer<List<Post>>() {
             @Override
             public void onChanged(List<Post> posts) {
-                adapter = new AllMessageRecyclerAdapter(posts, getActivity(), new AllMessageRecyclerAdapter.OnMyClickListener() {
+                adapter = new MyPostRecycler(posts, getActivity(), new MyPostRecycler.Click() {
+                    @Override
+                    public int onclickPosition(int position) {
+                        Log.d("eeet", "onButtonClicked: "+position);
+
+                        return 0;
+
+                    }
+
+                    @Override
+                    public int onclickPost(Post post, int position) {
+
+
+                        return 0;
+                    }
+
+
+                });
+
+                     /*
+                        new AllMessageRecyclerAdapter.OnMyClickListener() {
                     @Override
                     public void onButtonClicked(Post post) {
                         Log.d("eeet", "onButtonClicked: "+post.getIdpost());
@@ -120,26 +141,13 @@ public class MMyPostFragment extends Fragment {
 
                     }
                 });
-                recyclerView.setAdapter(adapter);
+                */
+                        recyclerView.setAdapter(adapter);
             }
         });
 
     }
 
-    public void DeleteID(int id)
-    {
-        MyApi api = MyRetrofit.getMyRetrofit().create(MyApi.class);
-        api.DeletePost(id).enqueue(new Callback<List<Status>>() {
-            @Override
-            public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
-                Log.d("sssx", "response: "+response.body().get(0).getStatus());
-            }
 
-            @Override
-            public void onFailure(Call<List<Status>> call, Throwable t) {
-                Log.d("sssx", "onFailure: "+t.getMessage());
-            }
-        });
-    }
 
 }
