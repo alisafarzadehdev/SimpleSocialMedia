@@ -1,6 +1,7 @@
 package com.alisafarzadeh.twittermvvm.Retrofit;
 
 import com.alisafarzadeh.twittermvvm.model.Category;
+import com.alisafarzadeh.twittermvvm.model.Comment;
 import com.alisafarzadeh.twittermvvm.model.Post;
 import com.alisafarzadeh.twittermvvm.model.Status;
 import com.alisafarzadeh.twittermvvm.model.UserId;
@@ -47,5 +48,14 @@ public interface MyApi {
     @POST("DeletePost.php")
     Call<List<Status>> DeletePost (@Field("id") int id);
 
+
+    @FormUrlEncoded
+    @POST("ShowComment.php")
+    Observable<List<Comment>> ShowComment (@Field("idpost") int id);
+
+    @FormUrlEncoded
+    @POST("SendComment.php")
+    Observable<List<Status>> SendComment (@Field("idpost") int idpost,@Field("iduser") int iduser
+    ,@Field("comment") String comment);
 
 }

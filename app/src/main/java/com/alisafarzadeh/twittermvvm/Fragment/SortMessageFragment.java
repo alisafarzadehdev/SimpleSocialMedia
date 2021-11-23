@@ -20,7 +20,8 @@ import android.widget.Toast;
 import com.alisafarzadeh.twittermvvm.R;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyApi;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyRetrofit;
-import com.alisafarzadeh.twittermvvm.activity.SendMessageActivity;
+import com.alisafarzadeh.twittermvvm.Util.Utils;
+import com.alisafarzadeh.twittermvvm.activity.CommentActivity;
 import com.alisafarzadeh.twittermvvm.adapter.AllMessageRecyclerAdapter;
 import com.alisafarzadeh.twittermvvm.model.Category;
 import com.alisafarzadeh.twittermvvm.model.Post;
@@ -117,17 +118,10 @@ public class SortMessageFragment extends Fragment {
                 Log.d("TAGll", "showWithCat: "+posts1.get(0).getNameuser());
                 adapter = new AllMessageRecyclerAdapter(posts1, getActivity(), new AllMessageRecyclerAdapter.OnMyClickListener() {
                     @Override
-                    public void onButtonClicked(Post post) {
-
-                    }
-
-                    @Override
-                    public void onGetIDButtonClicked(int post) {
-
-                    }
-
-                    @Override
-                    public void onPositionitem(int position) {
+                    public void onButtonClicked(Post post, int position) {
+                        Utils.SendValuePostActivity
+                                (getActivity(), CommentActivity.class
+                                        ,post.getIdpost(),post.getTitle(),post.getContent(),post.getNameuser(),post.getAvatar(),post.getMedia());
 
                     }
                 });

@@ -9,8 +9,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/one"
-        android:backgroundTint="@color/one"
+        android:background="@color/Lprimaryone"
+        android:backgroundTint="@color/Lprimaryone"
         >
 
 
@@ -22,13 +22,13 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:background="@color/one"
-            android:backgroundTint="@color/one"
+            android:background="@color/Lprimaryone"
+            android:backgroundTint="@color/Lprimaryone"
             app:layout_constraintEnd_toStartOf="@+id/textView3"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:ms_background_color="@color/one" />
+            app:ms_background_color="@color/Lprimaryone" />
 
         <TextView
             android:id="@+id/textView3"

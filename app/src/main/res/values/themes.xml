@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.TwitterMVVM" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/one</item>
-        <item name="colorPrimaryVariant">@color/twe</item>
+        <item name="colorPrimary">@color/Lprimaryone</item>
+        <item name="colorPrimaryVariant">@color/Lprimarytwo</item>
         <item name="colorOnPrimary">@color/three</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -14,10 +14,11 @@
         <!-- Customize your theme here. -->
     </style>
 
+
     <style name="textPrimery" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">#eeeeee</item>
+        <item name="android:textColor">@color/Lprimarytext</item>
         <item name="android:fontFamily">@font/vazir</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="textSecend" parent="TextAppearance.AppCompat">

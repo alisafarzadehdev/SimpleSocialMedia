@@ -1,5 +1,6 @@
 package com.alisafarzadeh.twittermvvm.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +21,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.alisafarzadeh.twittermvvm.activity.LoginSignupActivity;
+import com.alisafarzadeh.twittermvvm.activity.SendMessageActivity;
 import com.alisafarzadeh.twittermvvm.model.UserId;
 import com.alisafarzadeh.twittermvvm.R;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyApi;
@@ -40,10 +42,12 @@ public class LoginFragment extends Fragment {
     SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
 
-
+    ProgressDialog pd;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+
+        pd = new ProgressDialog(getActivity());
 
         LoginToSignupBTN = view.findViewById(R.id.logintosignupBTN);
         LoginBTN = view.findViewById(R.id.LoginBTN);
@@ -67,6 +71,8 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //Login(LoginUsernameEdit.getText().toString(),LoginPasswordEdit.getText().toString());
+                pd.setMessage("در حال بررسی");
+                pd.show();
                 Login(LoginUsernameEdit.getText().toString(), LoginPasswordEdit.getText().toString());
             }
         });
@@ -94,12 +100,13 @@ public class LoginFragment extends Fragment {
                 editor.putInt("ID", Integer.parseInt(response.body()));
                 editor.commit();
 
+                pd.hide();
                 startActivity(new Intent(getActivity(), LoginSignupActivity.class));
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-
+                pd.hide();
                 Toast.makeText(getActivity(), "نام کاربری و پسورد اشتباه است!", Toast.LENGTH_SHORT).show();
                 Log.d("yTAG", "Error: " + t.getMessage() + "\n" + t.getCause());
 

@@ -18,4 +18,10 @@
     <color name="text">#eeeeee</color>
     <color name="textSec">#dddddd</color>
 
+    <color name="Lprimaryone">#232e3a</color>
+    <color name="Lprimarytwo">#4e5761</color>
+    <color name="Lprimarythree">#7b8188</color>
+    <color name="Lprimarytext">#d3d5d7</color>
+
+
 </resources>

@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -29,6 +30,7 @@ import com.alisafarzadeh.twittermvvm.Util.Utils;
 import com.alisafarzadeh.twittermvvm.databinding.ActivitySendMessageBinding;
 import com.alisafarzadeh.twittermvvm.viewmodel.MyViewModel;
 import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 import java.io.IOException;
@@ -70,6 +72,8 @@ public class SendMessageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //sendPost();
+                binding.HeaderSendPost.buildDrawingCache();
+                bitmap = binding.HeaderSendPost.getDrawingCache();
                 pd.setMessage("صبر کنید");
                 pd.show();
                 sendPostObserv(SendMessageActivity.this,
@@ -95,13 +99,15 @@ public class SendMessageActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK) {
             if (requestCode == 148) {
-                try {
+
                     Uri selectedImageUri = data.getData();
-                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
-                    binding.HeaderSendPost.setImageBitmap(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                   // bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
+                    Picasso.get().load(selectedImageUri)
+                            .resize(180, 180)
+                            .centerCrop()
+                            .into(binding.HeaderSendPost);
+                    //binding.HeaderSendPost.setImageBitmap(bitmap);
+
             }
         }
     }
@@ -153,7 +159,7 @@ public class SendMessageActivity extends AppCompatActivity {
 
         PostApi myApi = MyRetrofit.getMyRetrofit().create(PostApi.class);
         binding.HeaderSendPost.buildDrawingCache();
-
+        bitmap = binding.HeaderSendPost.getDrawingCache();
         myApi.SendPost(
                 Utils.imagetoString(bitmap),
                 binding.TitleSendPost.getText().toString(),

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.alisafarzadeh.twittermvvm.Retrofit.MyApi;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyRetrofit;
+import com.alisafarzadeh.twittermvvm.model.Comment;
 import com.alisafarzadeh.twittermvvm.model.Post;
 import com.alisafarzadeh.twittermvvm.model.Save;
 import com.alisafarzadeh.twittermvvm.model.Status;
@@ -34,7 +35,7 @@ public class MyViewModel extends ViewModel {
     }
 
 
-    private MutableLiveData<List<Post>> userLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Post>> userLiveData = new MutableLiveData<>();
 
     public LiveData<List<Post>> getUser() {
         return userLiveData;
@@ -66,6 +67,16 @@ public class MyViewModel extends ViewModel {
     public LiveData<List<Post>> ShowWithCategoryViewModel(int cat)
     {
         return repository.ShowWithPost(cat);
+    }
+
+    public LiveData<List<Comment>> ShowCommentViewModel(int cat)
+    {
+        return repository.ShowCommentRepo(cat);
+    }
+
+    public LiveData<List<Status>> SendCommentViewModel(int post , int user , String comment)
+    {
+        return repository.SendCommentRepo(post, user, comment);
     }
 
 }

@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/one"
+        android:background="@color/Lprimaryone"
         tools:context=".activity.SendMessageActivity">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:hint="موضوع پست"
             android:minHeight="48dp"
-            android:textColorHint="#eeeeee"
+            android:textColorHint="@color/Lprimarytext"
             app:layout_constraintBottom_toTopOf="@+id/guideline13"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +48,7 @@
             android:hint="متن پیام"
             android:inputType="textLongMessage|textMultiLine"
             android:text=""
-            android:textColorHint="#eeeeee"
+            android:textColorHint="@color/Lprimarytext"
             app:layout_constraintBottom_toTopOf="@+id/guideline10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,9 +60,8 @@
             android:id="@+id/CategorySendPost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="#eeeeee"
-            android:backgroundTint="@color/one"
-            android:background="@color/one"
+            android:backgroundTint="@color/Lprimaryone"
+            android:background="@color/Lprimaryone"
             app:layout_constraintBottom_toTopOf="@+id/guideline12"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,6 +73,8 @@
             style="@style/textPrimery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@color/three"
             android:backgroundTint="@color/three"
             android:text="ارسال"

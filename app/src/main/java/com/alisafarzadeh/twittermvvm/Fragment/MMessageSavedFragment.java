@@ -13,27 +13,19 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.alisafarzadeh.twittermvvm.R;
-import com.alisafarzadeh.twittermvvm.Retrofit.BookmarkApi;
-import com.alisafarzadeh.twittermvvm.Retrofit.MyRetrofit;
+import com.alisafarzadeh.twittermvvm.Util.Utils;
+import com.alisafarzadeh.twittermvvm.activity.CommentActivity;
 import com.alisafarzadeh.twittermvvm.adapter.AllMessageRecyclerAdapter;
 import com.alisafarzadeh.twittermvvm.model.Post;
-import com.alisafarzadeh.twittermvvm.model.Save;
 import com.alisafarzadeh.twittermvvm.viewmodel.MyViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class MMessageSavedFragment extends Fragment {
 
@@ -77,17 +69,10 @@ public class MMessageSavedFragment extends Fragment {
 
                 recyclerAdapter = new AllMessageRecyclerAdapter(posts, getActivity(), new AllMessageRecyclerAdapter.OnMyClickListener() {
                     @Override
-                    public void onButtonClicked(Post post) {
-
-                    }
-
-                    @Override
-                    public void onGetIDButtonClicked(int post) {
-
-                    }
-
-                    @Override
-                    public void onPositionitem(int position) {
+                    public void onButtonClicked(Post post, int position) {
+                        Utils.SendValuePostActivity
+                                (getActivity(), CommentActivity.class
+                                        ,post.getIdpost(),post.getTitle(),post.getContent(),post.getNameuser(),post.getAvatar(),post.getMedia());
 
                     }
                 });

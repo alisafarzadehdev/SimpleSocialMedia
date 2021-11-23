@@ -2,6 +2,7 @@ package com.alisafarzadeh.twittermvvm.repository;
 
 import androidx.lifecycle.LiveData;
 
+import com.alisafarzadeh.twittermvvm.model.Comment;
 import com.alisafarzadeh.twittermvvm.model.Post;
 import com.alisafarzadeh.twittermvvm.model.Save;
 import com.alisafarzadeh.twittermvvm.model.Status;
@@ -52,6 +53,18 @@ public class Repository {
     public LiveData<List<Post>> ShowWithPost(int category)
     {
         return getMessageResponse.ShowWithCategory(category);
+    }
+
+
+    public LiveData<List<Comment>> ShowCommentRepo(int category)
+    {
+        return getMessageResponse.ShowComment(category);
+    }
+
+
+    public LiveData<List<Status>> SendCommentRepo(int post , int user , String comment)
+    {
+        return getMessageResponse.SendComment(post, user, comment);
     }
 
 }

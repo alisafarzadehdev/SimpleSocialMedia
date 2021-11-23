@@ -2,15 +2,22 @@ package com.alisafarzadeh.twittermvvm.Fragment;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -28,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.alisafarzadeh.twittermvvm.activity.LoginSignupActivity;
+import com.alisafarzadeh.twittermvvm.activity.MainActivity;
 import com.alisafarzadeh.twittermvvm.model.UserId;
 import com.alisafarzadeh.twittermvvm.R;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyApi;
@@ -53,9 +61,12 @@ public class SignupFragment extends Fragment {
             SignupBioGraphyEdit;
     ImageView SignupImageImg;
 
+    ActivityResultLauncher<String> mPermissionResult;
+
     SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
 
+    ProgressDialog pd;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -67,6 +78,9 @@ public class SignupFragment extends Fragment {
         SignupNameEdit = view.findViewById(R.id.SignupNameEdit);
         SignupPasswordEdit = view.findViewById(R.id.SignupPasswordEdit);
         SignupUsernameEdit = view.findViewById(R.id.SignupUsernameEdit);
+
+        pd = new ProgressDialog(getActivity());
+
 
         sharedpreferences = getActivity().getSharedPreferences(getActivity().getPackageName()+"MySaveUser", Context.MODE_PRIVATE);
         editor = sharedpreferences.edit();
@@ -127,11 +141,9 @@ public class SignupFragment extends Fragment {
             public void onClick(View view) {
                 if (validation(SignupNameEdit,SignupUsernameEdit,SignupPasswordEdit,bitmap,SignupBioGraphyEdit))
                 {
-                    Signup(SignupNameEdit.getText().toString(),
-                            SignupUsernameEdit.getText().toString(),
-                            SignupPasswordEdit.getText().toString(),
-                            Utils.imagetoString(bitmap),
-                            SignupBioGraphyEdit.getText().toString());
+                    mPermissionResult.launch(Manifest.permission.INTERNET);
+
+
                 }else{
                     Toast.makeText(getActivity(), "اطلاعات را کامل کنید", Toast.LENGTH_SHORT).show();
                 }
@@ -145,6 +157,28 @@ public class SignupFragment extends Fragment {
                 imageChooser();
             }
         });
+
+        mPermissionResult = registerForActivityResult(
+                new ActivityResultContracts.RequestPermission(),
+                new ActivityResultCallback<Boolean>() {
+                    @Override
+                    public void onActivityResult(Boolean result) {
+                        if(result) {
+                            Log.e("xtag", "onActivityResult: PERMISSION GRANTED");
+                            pd.setMessage("درحال ثبت نام");
+                            pd.show();
+                            Signup(SignupNameEdit.getText().toString(),
+                                    SignupUsernameEdit.getText().toString(),
+                                    SignupPasswordEdit.getText().toString(),
+                                    Utils.imagetoString(bitmap),
+                                    SignupBioGraphyEdit.getText().toString());
+
+                        } else {
+                            Log.e("xtag", "onActivityResult: PERMISSION DENIED");
+                        }
+                    }
+                });
+
 
         SignupToLoginBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,6 +233,8 @@ public class SignupFragment extends Fragment {
 
                 Log.d("yTAG", "onResponse: "+response.body());
 
+                pd.hide();
+
                 editor.putBoolean("IsRegister",true);
                 editor.putInt("ID", Integer.parseInt(response.body().get(0).getUser()));
                 editor.commit();
@@ -209,6 +245,8 @@ public class SignupFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<UserId>> call, Throwable t) {
+
+                pd.hide();
 
                 Toast.makeText(getActivity(), t.getMessage()+"", Toast.LENGTH_SHORT).show();
                 Log.d("yTAG", "onResponse: "+t.getMessage()+ ":: "+t.getCause());

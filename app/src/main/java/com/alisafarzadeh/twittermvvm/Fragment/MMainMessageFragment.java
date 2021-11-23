@@ -3,8 +3,6 @@ package com.alisafarzadeh.twittermvvm.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,27 +21,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alisafarzadeh.twittermvvm.Retrofit.BookmarkApi;
-import com.alisafarzadeh.twittermvvm.Retrofit.MyApi;
-import com.alisafarzadeh.twittermvvm.Retrofit.MyRetrofit;
+import com.alisafarzadeh.twittermvvm.Util.Utils;
+import com.alisafarzadeh.twittermvvm.activity.CommentActivity;
 import com.alisafarzadeh.twittermvvm.activity.SendMessageActivity;
 import com.alisafarzadeh.twittermvvm.model.Post;
 import com.alisafarzadeh.twittermvvm.R;
 import com.alisafarzadeh.twittermvvm.adapter.AllMessageRecyclerAdapter;
-import com.alisafarzadeh.twittermvvm.model.Status;
-import com.alisafarzadeh.twittermvvm.model.UserId;
 import com.alisafarzadeh.twittermvvm.viewmodel.MyViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class MMainMessageFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -55,7 +44,6 @@ public class MMainMessageFragment extends Fragment implements SwipeRefreshLayout
     MyViewModel myViewModel;
 
     SwipeRefreshLayout refreshLayout;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -109,21 +97,11 @@ public class MMainMessageFragment extends Fragment implements SwipeRefreshLayout
                 recyclerView.scrollToPosition(postlist.size()-1);
                 adapter = new AllMessageRecyclerAdapter(posts, getActivity(), new AllMessageRecyclerAdapter.OnMyClickListener() {
                     @Override
-                    public void onButtonClicked(Post post) {
+                    public void onButtonClicked(Post post, int position) {
+                        Utils.SendValuePostActivity
+                                (getActivity(), CommentActivity.class
+                                        ,post.getIdpost(),post.getTitle(),post.getContent(),post.getNameuser(),post.getAvatar(),post.getMedia());
 
-                        Log.d("lllllly",post.getIdpost()+""+post.getNameuser());
-
-                    }
-
-                    @Override
-                    public void onGetIDButtonClicked(int post) {
-                        Log.d("llllllx",post+"");
-
-                    }
-
-                    @Override
-                    public void onPositionitem(int position) {
-                        Log.d("llllll",position+"");
                     }
                 });
                 recyclerView.setAdapter(adapter);
@@ -211,20 +189,11 @@ public class MMainMessageFragment extends Fragment implements SwipeRefreshLayout
                 postlist = posts;
                 adapter = new AllMessageRecyclerAdapter(posts, getActivity(), new AllMessageRecyclerAdapter.OnMyClickListener() {
                     @Override
-                    public void onButtonClicked(Post post) {
-                        Log.d("lllllly",post.getIdpost()+""+post.getNameuser());
+                    public void onButtonClicked(Post post, int position) {
+                        Utils.SendValuePostActivity
+                                (getActivity(), CommentActivity.class
+                                        ,post.getIdpost(),post.getTitle(),post.getContent(),post.getNameuser(),post.getAvatar(),post.getMedia());
 
-                    }
-
-                    @Override
-                    public void onGetIDButtonClicked(int post) {
-                        Log.d("llllllx",post+"");
-
-                    }
-
-                    @Override
-                    public void onPositionitem(int position) {
-                        Log.d("llllll",position+"");
                     }
                 });
                 recyclerView.setAdapter(adapter);

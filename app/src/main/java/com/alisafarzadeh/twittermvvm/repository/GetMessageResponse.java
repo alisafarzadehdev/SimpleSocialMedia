@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.alisafarzadeh.twittermvvm.Retrofit.BookmarkApi;
 import com.alisafarzadeh.twittermvvm.Retrofit.CategoryApi;
 import com.alisafarzadeh.twittermvvm.Retrofit.PostApi;
+import com.alisafarzadeh.twittermvvm.model.Comment;
 import com.alisafarzadeh.twittermvvm.model.Post;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyApi;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyRetrofit;
@@ -169,4 +170,37 @@ public class GetMessageResponse {
         }));
         return mutable;
     }
+
+
+    public MutableLiveData<List<Comment>> ShowComment(int post)
+    {
+        MyApi commentapi = MyRetrofit.getMyRetrofit().create(MyApi.class);
+        MutableLiveData<List<Comment>> mutable = new MutableLiveData<>();
+        compositeDisposable.add(commentapi.ShowComment(post)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(posts -> {
+                    if (posts!=null) {
+                        mutable.setValue(posts);
+                    }
+                }));
+        return mutable;
+    }
+
+
+    public MutableLiveData<List<Status>> SendComment (int post , int user , String comment)
+    {
+        MyApi commentapi = MyRetrofit.getMyRetrofit().create(MyApi.class);
+        MutableLiveData<List<Status>> mutable = new MutableLiveData<>();
+        compositeDisposable.add(commentapi.SendComment(post,user,comment)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(posts -> {
+                    if (posts!=null) {
+                        mutable.setValue(posts);
+                    }
+                }));
+        return mutable;
+    }
+
 }

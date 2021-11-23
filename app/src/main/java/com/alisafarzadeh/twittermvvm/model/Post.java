@@ -13,8 +13,7 @@ import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.alisafarzadeh.twittermvvm.Util.MyConnect;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -128,12 +127,11 @@ public class Post {
 
     @BindingAdapter("android:loadImageProfile")
     public static void loadImageProfile(ImageView imageView,String link_url){
-      Log.d("ccc", "http://192.168.1.5/MessageApp/"+link_url);
         String URLIP = "http://94.232.169.217/MessageApp/";
         String URL = "http://androidhelp.ir/MessageApp/";
         String URLLOCAL =  "http://192.168.1.5/MessageApp/";
 
-        Picasso.get().load(URLLOCAL+link_url).into(imageView);
+        Picasso.get().load(MyConnect.AddressLocal +link_url).into(imageView);
     }
 
     @BindingAdapter("android:loadImageView")
@@ -143,7 +141,7 @@ public class Post {
 
         String URLLOCAL =  "http://192.168.1.5/MessageApp/";
         String URL = "http://androidhelp.ir/MessageApp/";
-        Picasso.get().load(URLLOCAL+link_url)
+        Picasso.get().load(MyConnect.AddressLocal+link_url)
                 .transform(new Transformation() {
                     @Override
                     public Bitmap transform(Bitmap source) {

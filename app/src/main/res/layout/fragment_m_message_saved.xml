@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment.MMessageSavedFragment"
-    android:background="@color/one">
+    android:background="@color/Lprimaryone">
 
 
     <androidx.recyclerview.widget.RecyclerView

@@ -36,8 +36,8 @@ public class MyPostRecycler extends RecyclerView.Adapter<MyPostRecycler.MyPostHo
     }
 
     public interface Click{
-        public int onclickPosition(int position);
-        public int onclickPost(Post post,int position);
+        int onclickPosition(int position);
+        int onclickPost(Post post, int position);
     }
     public void DeleteID(int id)
     {

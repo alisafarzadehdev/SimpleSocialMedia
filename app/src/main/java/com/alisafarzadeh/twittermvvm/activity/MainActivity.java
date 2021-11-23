@@ -25,6 +25,7 @@ import com.alisafarzadeh.twittermvvm.R;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyApi;
 import com.alisafarzadeh.twittermvvm.Retrofit.MyRetrofit;
 import com.alisafarzadeh.twittermvvm.Retrofit.PostApi;
+import com.alisafarzadeh.twittermvvm.Util.MyConnect;
 import com.alisafarzadeh.twittermvvm.Util.Utils;
 import com.alisafarzadeh.twittermvvm.databinding.ActivityMainBinding;
 import com.alisafarzadeh.twittermvvm.databinding.LayoutHeaderdrawerBinding;
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 txt.setText(response.body().get(0).getName());
 
                 //Picasso.get().load("http://androidhelp.ir/MessageApp/"+response.body().get(0).getAvatar()).into(img);
-                Picasso.get().load("http://192.168.1.5/MessageApp/"+response.body().get(0).getAvatar()).into(img);
+                Picasso.get().load(MyConnect.AddressLocal +response.body().get(0).getAvatar()).into(img);
             }
 
             @Override

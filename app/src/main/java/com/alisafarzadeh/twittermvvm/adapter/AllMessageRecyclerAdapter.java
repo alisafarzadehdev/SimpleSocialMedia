@@ -92,10 +92,13 @@ public class AllMessageRecyclerAdapter extends RecyclerView.Adapter<AllMessageRe
         //holder.binding.favitem.setChecked();
         holder.binding.setAllMessage(posts.get(position));
 
+        /*
         int randomblue = new Random().nextInt(100);
         int randomred = new Random().nextInt(100);
         int randomgreen = new Random().nextInt(100);
         holder.binding.ConstraintItemAllMessage.setBackgroundColor(Color.argb(255,randomred,randomgreen,randomblue));
+
+         */
         //isBookmark(posts.get(position).getIdpost(), holder.binding.bookmarkitempost);
         isBookmark(posts.get(position).getIdpost(), holder.binding.bookmarkitempost);
 
@@ -239,9 +242,7 @@ git
     }
 
     public interface OnMyClickListener{
-        void onButtonClicked(Post post);
-        void onGetIDButtonClicked(int post);
-        void onPositionitem(int position);
+        void onButtonClicked(Post post , int position);
     }
 
 
@@ -271,11 +272,7 @@ git
         public void onClick(View view) {
             if (view.getId() == binding.ConstraintItemAllMessage.getId()){
                 //onMyClickListener(view.getId());
-                onMyClickListener.onButtonClicked(posts.get(getAdapterPosition()));
-
-                int id = Integer.parseInt(posts.get(getAdapterPosition()).getIdpost());
-                onMyClickListener.onGetIDButtonClicked(id);
-                onMyClickListener.onPositionitem(getAdapterPosition());
+                onMyClickListener.onButtonClicked(posts.get(getAdapterPosition()),getAdapterPosition());
             }
             if (view.getId() == binding.bookmarkitempost.getId()){
                 //onMyClickListener(view.getId());
